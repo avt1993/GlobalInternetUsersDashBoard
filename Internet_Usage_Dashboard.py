@@ -9,7 +9,7 @@ st.set_page_config(page_title = "Internet Usage Dashboard",
 
 @st.cache_data
 def get_data_from_csv():
-    giu_df = pd.read_csv('/Users/antoniovillardaga/Documents/Python/GlobalInternetUsersDashBoard/Global Internet Users.csv')
+    giu_df = pd.read_csv('https://raw.githubusercontent.com/avt1993/GlobalInternetUsersDashBoard/main/Global%20Internet%20Users.csv')
     return giu_df
 
 

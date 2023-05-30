@@ -28,7 +28,6 @@ def plot_multi_line_graph (country1_selected, country2_selected, y_label_string,
     return fig
 
 
-
 st.set_page_config(page_title = "Internet Usage Dashboard",
                    page_icon = ":bar_chart:",
                    layout = "wide"
@@ -40,6 +39,9 @@ def get_data_from_csv():
     return giu_df
 
 giu_df = get_data_from_csv()
+
+min_year = int(giu_df['Year'].min())
+max_year = int(giu_df['Year'].max())
 
 unique_countries = giu_df["Entity"].unique()
 pre_defined_option1 = "United States"
@@ -66,8 +68,8 @@ if (mode_selected == "Single Country"):
         "Entity == @country"
     )
 
-    start_range = st.sidebar.slider('Start Range', min_value = giu_df['Year'].min(), max_value = giu_df['Year'].max(), value = giu_df['Year'].min())
-    end_range = st.sidebar.slider('End Range', min_value = giu_df['Year'].min(), max_value = giu_df['Year'].max(), value = giu_df['Year'].max())
+    start_range = st.sidebar.slider('Start Range', min_value = min_year, max_value = max_year, value = min_year)
+    end_range = st.sidebar.slider('End Range', min_value = min_year, max_value = max_year, value = max_year)
 
     country_selected = country_selected[(country_selected['Year'] >= start_range) & (country_selected['Year'] <= end_range)]
 
@@ -111,11 +113,6 @@ else:
     country2_selected = giu_df.query(
     "Entity == @country2"
     )
-
-    min_year = giu_df['Year'].min()
-    min_year = int(min_year)
-    max_year = giu_df['Year'].max()
-    max_year = int(max_year)
 
     start_range = st.sidebar.slider('Start Range', min_value = min_year, max_value = max_year, value = min_year)
     end_range = st.sidebar.slider('End Range', min_value = min_year, max_value = max_year, value = max_year)

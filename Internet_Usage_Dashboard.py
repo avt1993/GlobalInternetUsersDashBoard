@@ -112,8 +112,13 @@ else:
     "Entity == @country2"
     )
 
-    start_range = st.sidebar.slider('Start Range', min_value = giu_df['Year'].min(), max_value = giu_df['Year'].max(), value = giu_df['Year'].min())
-    end_range = st.sidebar.slider('End Range', min_value = giu_df['Year'].min(), max_value = giu_df['Year'].max(), value = giu_df['Year'].max())
+    min_year = giu_df['Year'].min()
+    min_year = int(min_year)
+    max_year = giu_df['Year'].max()
+    max_year = int(max_year)
+
+    start_range = st.sidebar.slider('Start Range', min_value = min_year, max_value = max_year, value = min_year)
+    end_range = st.sidebar.slider('End Range', min_value = min_year, max_value = max_year, value = max_year)
 
     country1_selected = country1_selected[(country1_selected['Year'] >= start_range) & (country1_selected['Year'] <= end_range)]
     country2_selected = country2_selected[(country2_selected['Year'] >= start_range) & (country2_selected['Year'] <= end_range)]

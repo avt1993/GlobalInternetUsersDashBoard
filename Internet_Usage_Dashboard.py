@@ -2,7 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import streamlit as st
 
-def plot_line_graph (country_selected, y_label_string, title_string, column_to_plot):
+def plot_line_graph(country_selected, y_label_string, title_string, column_to_plot):
     fig, ax = plt.subplots()
     ax.plot(country_selected['Year'], country_selected[column_to_plot])
     fig.tight_layout()
@@ -14,8 +14,7 @@ def plot_line_graph (country_selected, y_label_string, title_string, column_to_p
 
     return fig
 
-
-def plot_multi_line_graph (country1_selected, country2_selected, y_label_string, title_string, column_to_plot):
+def plot_multi_line_graph(country1_selected, country2_selected, y_label_string, title_string, column_to_plot):
     fig, ax = plt.subplots()
     ax.plot(country1_selected['Year'], country1_selected[column_to_plot], label = f" {country1}")
     ax.plot(country2_selected['Year'], country2_selected[column_to_plot], label = f" {country2}")
@@ -24,6 +23,18 @@ def plot_multi_line_graph (country1_selected, country2_selected, y_label_string,
     plt.ylabel(y_label_string)
     plt.grid(True)
     plt.legend()
+
+    return fig
+
+def plot_corr_graph(country_selected, x_label_string, y_label_string, title_string, column1_to_plot, column2_to_plot):
+    fig, ax = plt.subplots()
+    ax.scatter(country_selected[column1_to_plot], country_selected[column2_to_plot], alpha = 0.5)
+    plt.xlabel(x_label_string)
+    plt.ylabel(y_label_string)
+    plt.title(title_string)
+    plt.gca().spines['top'].set_visible(False)
+    plt.gca().spines['right'].set_visible(False)
+    
 
     return fig
 
@@ -83,8 +94,7 @@ if (mode_selected == "Single Country"):
     st.dataframe(country_selected, height = 300, width = 1600) 
 
 
-
-    st.title(":bar_chart: " +  f" {country}" + " Line Charts")
+    st.title(":bar_chart: " +  f" {country}" + " - Internet Users")
 
     # TOTAL INTERNET USERS
     fig1 = plot_line_graph(country_selected, 'Total Users', 'Total Internet Users from 1980 - 2020', 'No. of Internet Users')
@@ -92,9 +102,28 @@ if (mode_selected == "Single Country"):
     # PERCENTAGE INCREASE IN INTERNET USERS FROM YEAR TO YEAR
     fig2 = plot_line_graph(country_selected, 'Percentage (%) Increase', 'Increase (%) in Internet Users', 'Percentage Increase')
 
+
     left_column, right_column = st.columns(2)
     left_column.pyplot(fig1, use_container_width = True)
     right_column.pyplot(fig2, use_container_width = True)
+
+    st.title(":bar_chart: " +  f" {country}" + " - Cellular/Broadband Subscriptions")
+
+    fig3 = plot_corr_graph(country_selected, 'Cellular Subscriptions per 100 People', 'Total Internet Users', 'Internet Users vs Cellular Subscriptions',
+                            'Cellular Subscription', 'No. of Internet Users')
+    fig4 = plot_corr_graph(country_selected, 'Broadband Subscriptions per 100 People', 'Total Internet Users', 'Internet Users vs Broadband Subscriptions',
+                            'Broadband Subscription', 'No. of Internet Users')
+
+    left_column, right_column = st.columns(2)
+    left_column.pyplot(fig3, use_container_width = True)
+    right_column.pyplot(fig4, use_container_width = True)
+
+
+    
+
+
+    
+
 
 
 else:

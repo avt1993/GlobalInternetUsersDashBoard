@@ -1,6 +1,8 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import streamlit as st
+import mpldatacursor
+
 
 def plot_line_graph(country_selected, y_label_string, title_string, column_to_plot):
     fig, ax = plt.subplots()
@@ -34,7 +36,6 @@ def plot_corr_graph(country_selected, x_label_string, y_label_string, title_stri
     plt.title(title_string)
     plt.gca().spines['top'].set_visible(False)
     plt.gca().spines['right'].set_visible(False)
-    
 
     return fig
 
@@ -113,13 +114,12 @@ if (mode_selected == "Single Country"):
                             'Cellular Subscription', 'No. of Internet Users')
     fig4 = plot_corr_graph(country_selected, 'Broadband Subscriptions per 100 People', 'Total Internet Users', 'Internet Users vs Broadband Subscriptions',
                             'Broadband Subscription', 'No. of Internet Users')
+ 
 
     left_column, right_column = st.columns(2)
     left_column.pyplot(fig3, use_container_width = True)
     right_column.pyplot(fig4, use_container_width = True)
 
-
-    
 
 
     

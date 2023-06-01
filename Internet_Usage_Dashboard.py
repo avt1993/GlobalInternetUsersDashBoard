@@ -1,7 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import streamlit as st
-import mpldatacursor
+
 
 
 def plot_line_graph(country_selected, y_label_string, title_string, column_to_plot):
